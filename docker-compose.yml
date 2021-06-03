@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+  reverse-proxy:
+    build:
+      context: .
+      dockerfile: ./etc/nginx/Dockerfile
+    networks:
+      - shared
+    ports:
+      - 80:80
+    volumes:
+      - ./etc/nginx/default.conf:/etc/nginx/conf.d/default.conf
+
+networks:
+  shared:
+    external: true
+    name: shared
+
+# Volumes are prefixed with stack name (stack_volume) when using docker stack deploy <stack> command
+volumes:
+  certbot:
